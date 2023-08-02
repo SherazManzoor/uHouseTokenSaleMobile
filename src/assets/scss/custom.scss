@@ -1,0 +1,354 @@
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400&family=Sora:wght@300;400;500;600;700;800&display=swap");
+$theme-colors: (
+  "site-primary": #cd5029,
+  "site-gray": #aa9d91,
+);
+$spacer: 1rem !default;
+$spacers: (
+  0: 0,
+  1: (
+    $spacer * 0.25,
+  ),
+  //4px
+  2:
+    (
+      $spacer * 0.5,
+    ),
+  //8px
+  3: $spacer,
+  //16px
+  4:
+    (
+      $spacer * 1.5,
+    ),
+  //24px
+  5:
+    (
+      $spacer * 3,
+    ),
+  //48px
+  6:
+    (
+      $spacer * 4,
+    ),
+  //64px
+  7:
+    (
+      $spacer * 5,
+    ),
+  //80px
+  8:
+    (
+      $spacer * 6.25,
+    ),
+  //100px
+  9:
+    (
+      $spacer * 7.5,
+    ),
+  //120px
+  10:
+    (
+      $spacer * 9.375,
+    ),
+  //150px
+  -1: (
+      $spacer * -0.25,
+    ),
+  //4px
+  -2: (
+      $spacer * -0.5,
+    ),
+  //8px
+  -3: -$spacer,
+  //16px
+  -4: (
+      $spacer * -1.5,
+    ),
+  //24px
+  -5: (
+      $spacer * -3,
+    ),
+  //48px
+  -6: (
+      $spacer * -4,
+    ),
+  //64px
+  -7: (
+      $spacer * -5,
+    ),
+  //80px
+  -8: (
+      $spacer * -6.25,
+    ),
+  //100px
+  -9: (
+      $spacer * -7.5,
+    ),
+  //120px
+  -10: (
+      $spacer * -9.375,
+    ) //150px,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+);
+@import "node_modules/bootstrap/scss/bootstrap";
+
+*:focus {
+  border-color: none !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  .layout {
+    flex: 1;
+    margin-top: 65px !important;
+  }
+}
+
+.header {
+  color: #f4f6f8e3;
+  position: fixed;
+  width: 100%;
+  padding: 10px 0px;
+  z-index: 1;
+  .logo {
+    color: #fff !important;
+    font-family: "Oswald";
+    font-weight: 600;
+    cursor: pointer;
+    @media (max-width: 767.98px) {
+      font-size: 16px !important;
+    }
+  }
+  .item {
+    cursor: pointer;
+    font-family: "Sora";
+    font-weight: 500;
+    font-size: 16px;
+    @media (max-width: 767.98px) {
+      font-size: 14px !important;
+    }
+  }
+  button {
+    background: #fff !important;
+    color: #261faa !important;
+    border-radius: 0px !important;
+    font-size: 18px;
+    font-family: "Roboto";
+    font-weight: 500;
+    padding: 10px 20px !important;
+    @media (max-width: 767.98px) {
+      font-size: 16px !important;
+    }
+  }
+}
+
+.hero {
+  background: #261faa;
+  .heading {
+    font-family: "Sora", Sans-serif;
+    font-size: 60px;
+    font-weight: 500;
+    color: #fff;
+    @media (max-width: 767.98px) {
+      font-size: 35px;
+      line-height: 35px;
+    }
+  }
+  button {
+    border: 2px solid #fff !important;
+    color: #fff !important;
+    padding: 12px 50px !important;
+    font-family: "Sora" !important;
+    font-size: 20px !important;
+    font-weight: 500;
+    border-radius: 0px !important;
+    transition: transform 0.5s ease;
+    &:hover {
+      background: #fff !important;
+      color: #261faa !important;
+      transform: translateY(-10px);
+    }
+  }
+  .token {
+    font-family: "Sora, sans-serif";
+    font-size: 35px;
+    font-weight: 300;
+    color: #fff;
+    @media (max-width: 767.98px) {
+      font-size: 24px !important;
+    }
+  }
+  .desc {
+    font-family: "Roboto, sans-serif";
+    font-size: 20px;
+    font-weight: 300;
+    color: rgba(244, 246, 248, 0.73);
+    @media (max-width: 767.98px) {
+      font-size: 14px !important;
+    }
+  }
+}
+
+.contact-us {
+  .card {
+    border-radius: 14px !important;
+    padding: 20px !important;
+    border: 0 !important;
+    box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px,
+      rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px,
+      rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px !important;
+    .heading {
+      font-family: "Sora" !important;
+      font-size: 35px;
+      font-weight: 600;
+      color: #000000;
+      @media (max-width: 767.98px) {
+        font-size: 24px !important;
+      }
+    }
+    hr {
+      border: 0 !important;
+      background: #aa9d91 !important;
+      height: 2px !important;
+    }
+    .balance {
+      font-family: "Sora";
+      font-weight: 500;
+      font-size: 16px !important;
+      color: #aa9d91;
+      @media (max-width: 767.98px) {
+        font-size: 14px !important;
+      }
+    }
+    .form-control {
+      border: 1px solid #aa9d91 !important;
+      border-radius: 2px !important;
+      color: #595c64 !important;
+      font-size: 16px !important;
+      font-weight: 500 !important;
+      font-family: "Sora" !important;
+      &::placeholder {
+        color: #aa9d91 !important;
+      }
+      @media (max-width: 767.98px) {
+        font-size: 14px !important;
+      }
+    }
+    button {
+      background: #000000 !important;
+      border: 1px solid #000000;
+      border-radius: 0px !important;
+      padding: 8px 10px !important;
+      font-family: "Sora" !important;
+      font-size: 18px !important;
+      font-weight: 500 !important;
+      color: #fff !important;
+      @media (max-width: 767.98px) {
+        font-size: 18px !important;
+      }
+      &:hover {
+        background: #261faa !important;
+        border: 1px solid #261faa !important;
+      }
+    }
+  }
+}
+
+.sale {
+  .card {
+    border-radius: 14px !important;
+    padding: 20px !important;
+    border: 0 !important;
+    box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px,
+      rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px,
+      rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px !important;
+    .heading {
+      font-family: "Sora" !important;
+      font-size: 35px;
+      font-weight: 600;
+      color: #000000;
+      @media (max-width: 767.98px) {
+        font-size: 24px !important;
+      }
+    }
+    hr {
+      border: 0 !important;
+      background: #aa9d91 !important;
+      height: 2px !important;
+    }
+    .balance {
+      font-family: "Sora";
+      font-weight: 500;
+      font-size: 16px !important;
+      color: #aa9d91;
+      @media (max-width: 767.98px) {
+        font-size: 14px !important;
+      }
+    }
+    .input-wrapper {
+      position: relative;
+      .form-control {
+        border: 0 !important;
+        color: #595c64 !important;
+        font-size: 24px !important;
+        font-weight: 700 !important;
+        font-family: "Sora" !important;
+        @media (max-width: 767.98px) {
+          font-size: 18px !important;
+        }
+      }
+      .token {
+        position: absolute;
+        right: 0;
+        top: 0;
+        color: #595c64 !important;
+        font-size: 24px !important;
+        font-weight: 700 !important;
+        font-family: "Sora" !important;
+        margin-top: 10px;
+        margin-right: 25px;
+        @media (max-width: 767.98px) {
+          font-size: 18px !important;
+        }
+      }
+    }
+    button {
+      background: #000000 !important;
+      border: 1px solid #000000;
+      border-radius: 0px !important;
+      padding: 10px !important;
+      font-family: "Sora" !important;
+      font-size: 25px !important;
+      font-weight: 500 !important;
+      color: #fff !important;
+      @media (max-width: 767.98px) {
+        font-size: 18px !important;
+      }
+      &:hover {
+        background: #261faa !important;
+        border: 1px solid #261faa !important;
+      }
+    }
+  }
+}
+
+.footer {
+  margin-top: 50px;
+  background: #000000;
+  padding: 20px 0px;
+  .logo {
+    font-size: 25px !important;
+    font-family: "Soro";
+    color: #fff;
+    font-weight: 500;
+  }
+  small {
+    font-size: 14px !important;
+    font-family: "Soro";
+    color: #fff;
+    font-weight: 400;
+  }
+}
