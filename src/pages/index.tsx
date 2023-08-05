@@ -9,6 +9,7 @@ function Home() {
     <div className="home">
       <Hero />
       {isUserDataExists ? <Sale /> : <ContactUs />}
+      {/* <Sale /> */}
     </div>
   );
 }

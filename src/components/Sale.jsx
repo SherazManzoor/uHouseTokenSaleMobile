@@ -5,6 +5,7 @@ import { showNotification, tronWeb } from "../utils";
 import { useWallet } from "@tronweb3/tronwallet-adapter-react-hooks";
 import { contracts } from "../config";
 import { setTokenAllowance, setTokenSold } from "../store/wallet/wallet.slice";
+import { TronWeb } from "@tronweb3/tronwallet-adapters";
 
 const Sale = () => {
   const {
@@ -14,7 +15,7 @@ const Sale = () => {
     tokenAllowance,
     referralReward,
     tokenToSale,
-  } = useSelector((state: any) => state?.wallet);
+  } = useSelector((state) => state?.wallet);
 
   const { address, signTransaction } = useWallet();
 
@@ -24,15 +25,23 @@ const Sale = () => {
   const [loader, setLoader] = React.useState(false);
 
   const dispatch = useDispatch();
-
-  const approveHandler = async (amount: number) => {
+  // dispatch(setTokenAllowance(1111111111111111111111));
+  const approveHandler = async (amount) => {
     try {
+      const tron = window.tron;
+      const tronWeb1 = tron?.tronWeb;
+
       if (!address) {
         showNotification("Please connect wallet first", "error");
         return null;
       }
 
-      const amountInSun = tronWeb.toSun(amount, 6);
+      if (amount > tokenToSale) {
+        showNotification("Sale Contract doesnot have enough tokens.", "error");
+        return null;
+      }
+
+      const amountInSun = tronWeb?.toSun(amount, 6);
       const parameters = [
         {
           type: "address",
@@ -40,21 +49,30 @@ const Sale = () => {
         },
         {
           type: "uint256",
-          value: amountInSun,
+          value: parseInt(amountInSun),
         },
       ];
-      const transaction =
-        await tronWeb?.transactionBuilder?.triggerSmartContract(
-          contracts?.tetherAddress,
-          "approve(address,uint256)",
-          { feeLimit: 20 * 1e6 },
-          parameters
-        );
+      console.log(
+        "amountInSun: " +
+          amountInSun +
+          " - contracts?.tokenSaleAddress: " +
+          contracts?.tokenSaleAddress
+      );
+      const tx = await tronWeb1?.transactionBuilder.triggerSmartContract(
+        contracts.tetherAddress,
+        "approve(address,uint256)",
+        { feeLimit: 150000000, callValue: 0 },
+        parameters,
+        tronWeb.address.toHex(address)
+      );
       console.log("amountInSun", amountInSun);
 
-      const res = await signTransaction(transaction?.transaction);
+      const res = await tronWeb1.trx.sign(tx.transaction);
 
-      await tronWeb.trx.sendRawTransaction(res);
+      const result = await tronWeb1.trx.sendRawTransaction(res);
+      if (result.result) {
+        // alert("Success");
+      }
       dispatch(setTokenAllowance(amountInSun));
       showNotification(`Approved ${amount} USDT`, "success");
     } catch (e) {
@@ -63,17 +81,23 @@ const Sale = () => {
     }
   };
 
-  const { tokenSold } = useSelector((state: any) => state?.wallet);
+  const { tokenSold } = useSelector((state) => state?.wallet);
 
-  const buyTokensHandler = async (amount: number, referer: string) => {
+  const buyTokensHandler = async (amount, referer) => {
     try {
+      const tron = window.tron;
+      const tronWeb1 = tron?.tronWeb;
       if (!address) {
         showNotification("Please connect wallet first", "error");
         return null;
       }
-
+      if (amount > tokenToSale) {
+        showNotification("Sale Contract doesnot have enough tokens.", "error");
+        return null;
+      }
+      console.log("Amount: " + amount);
       const amountInSun = tronWeb.toSun(amount, 6);
-
+      console.log("amountInSun: " + amountInSun);
       const parameters = [
         {
           type: "uint256",
@@ -84,29 +108,38 @@ const Sale = () => {
           value: referer,
         },
       ];
-
-      const transaction = await tronWeb.transactionBuilder.triggerSmartContract(
-        contracts?.tokenSaleAddress,
+      console.log(parameters);
+      let x = 20 * 1e6;
+      const tx = await tronWeb1.transactionBuilder.triggerSmartContract(
+        contracts.tokenSaleAddress,
         "buyTokens(uint256,address)",
-        { feeLimit: 20 * 1e6 },
+        { feeLimit: 150000000 },
         parameters
       );
 
-      const res = await signTransaction(transaction?.transaction);
-
-      await tronWeb.trx.sendRawTransaction(res);
+      console.log(x);
+      const res = await tronWeb1.trx.sign(tx.transaction);
+      console.log(tx.transaction);
+      // const result = await tronWeb.trx.sendRawTransaction(res);
+      const senttx = await tronWeb1.trx.sendRawTransaction(res);
+      console.log("senttx: " + senttx);
 
       const previousSold = tokenSold;
-      const newSold: any = previousSold + Number(amount);
+      const newSold = previousSold + Number(amount);
       dispatch(setTokenSold(newSold));
       showNotification(`Bought ${amount} tokens`, "success");
-      return transaction;
+      return senttx;
+
       // } else {
       //     showNotification("TronLink not installed", "error")
       //     return null;
       // }
     } catch (err) {
       console.log(err);
+      showNotification(
+        `Error: Make sure you have enough Energy and Gas fee`,
+        "error"
+      );
       throw err;
     }
   };
@@ -131,7 +164,7 @@ const Sale = () => {
                   type="number"
                   placeholder="50,000"
                   value={token}
-                  onChange={(e: any) => {
+                  onChange={(e) => {
                     setToken(e?.target?.value);
                     setUsdt(Number(e?.target?.value) * exchangeRate);
                   }}
@@ -173,7 +206,7 @@ const Sale = () => {
                     const referralAddress = urlParams.get("ref") || address;
                     console.log("referralAddress", referralAddress);
                     buyTokensHandler(token, referralAddress || "")
-                      .then((res: any) => {
+                      .then((res) => {
                         setLoader(false);
                         console.log(res);
                         setToken(0);
@@ -184,7 +217,7 @@ const Sale = () => {
                       });
                   } else {
                     approveHandler(usdt)
-                      .then((res: any) => {
+                      .then((res) => {
                         setLoader(false);
                         console.log(res);
                       })
